@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 dotenv.config();
 
@@ -13,6 +14,11 @@ app.listen(PORT,  () => console.log(`Server started on port: ${PORT}`));
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({
+    // change url to domain
+    origin: ["http://localhost:3001"],
+    credentials: true,
+}));
 
 // connect to mongoDB
 
@@ -28,3 +34,4 @@ mongoose.connect(process.env.MDB_CONNECT, {
 
 app.use("/auth", require("./routers/userRouter"));
 app.use("/customer", require("./routers/customerRouter"));
+
